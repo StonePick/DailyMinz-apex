@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>DailyMinz — Redirect</title>
+  <!-- Default meta-refresh to English; JS will update if visitor uses Chinese -->
+  <meta id="meta-refresh" http-equiv="refresh" content="5;url=https://en.dailyminz.org">
+  <!-- rel="me" for IndieAuth -->
+  <link rel="me" href="https://github.com/StonePick" />
+  <style>
+    :root {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, 'Noto Sans', Arial, 'Hiragino Kaku Gothic ProN', sans-serif
+    }
+
+    html,
+    body {
+      height: 100%
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: linear-gradient(180deg, #f7fafc, #ffffff);
+      color: #0f172a
+    }
+
+    .card {
+      max-width: 720px;
+      width: 100%;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(2, 6, 23, 0.06);
+      padding: 28px
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: 1.6rem
+    }
+
+    p {
+      margin: 8px 0
+    }
+
+    .muted {
+      color: #64748b;
+      font-size: 0.95rem
+    }
+
+    .cta {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      border: 1px solid #0f172a
+    }
+
+    .small {
+      font-size: 0.9rem;
+      color: #475569
+    }
+
+    .count {
+      font-weight: 600
+    }
+  </style>
+</head>
+
+<body>
+  <main class="card" role="main">
+    <h1>Welcome to DailyMinz. Here's the apex.</h1>
+    <p class="muted">You are going to be redirected to the blog in <span id="count">5</span> seconds.</p>
+    <p>If redirection fails, <a id="manual-link" class="cta" href="#">click here to enter</a>.</p>
+    <p class="small" id="lang-note">Redirect target will follow your browser language settings.</p>
+    <noscript>
+      <p class="muted">JavaScript is disabled in your browser. Please choose a language below to continue:</p>
+      <ul>
+        <li><a href="https://zh.dailyminz.org">中文站 (zh.dailyminz.org)</a></li>
+        <li><a href="https://en.dailyminz.org">English站 (en.dailyminz.org)</a></li>
+      </ul>
+      <p>
+        <a href="https://xn--sr8hvo.ws/previous">←</a>
+        An <a href="https://xn--sr8hvo.ws">IndieWeb Webring</a> 🕸💍
+        <a href="https://xn--sr8hvo.ws/next">→</a>
+      </p>
+    </noscript>
+  </main>
+
+  <script>
+    (function () {
+      const zhURL = 'https://zh.dailyminz.org';
+      const enURL = 'https://en.dailyminz.org';
+
+      // Detect language robustly
+      const rawLang = (navigator.languages && navigator.languages[0]) || navigator.language || navigator.userLanguage || '';
+      const lang = (rawLang || '').toLowerCase();
+
+      // Choose target: any language code starting with 'zh' -> Chinese
+      const isChinese = /^zh(-|$)/.test(lang);
+      const target = isChinese ? zhURL : enURL;
+
+      // Update the manual link and meta refresh so meta works if browser honors it
+      const manualLink = document.getElementById('manual-link');
+      manualLink.setAttribute('href', target);
+      manualLink.setAttribute('role', 'button');
+
+      const meta = document.getElementById('meta-refresh');
+      if (meta) {
+        meta.setAttribute('content', `5;url=${target}`);
+      }
+
+      // Update visible note for transparency
+      const langNote = document.getElementById('lang-note');
+      langNote.textContent = `Detected language: ${rawLang || 'unknown'}. Redirecting to ${isChinese ? '中文站' : 'English site'}.`;
+
+      // Countdown + final redirect (in case meta isn't honored)
+      const countEl = document.getElementById('count');
+      let count = 5;
+      const interval = setInterval(() => {
+        count -= 1;
+        if (countEl) countEl.textContent = String(count);
+        if (count <= 0) {
+          clearInterval(interval);
+          // Use replace to avoid polluting history
+          try { window.location.replace(target); }
+          catch (e) { window.location.href = target; }
+        }
+      }, 1000);
+
+      // Accessibility: allow Enter/Space on the manual link when focused
+      manualLink.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') window.location.href = target;
+      });
+
+    })();
+  </script>
+
+</body>
+
+</html>
