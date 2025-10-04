@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="authorization_endpoint" href="https://indieauth.com/auth">
-  <link rel="token_endpoint" href="https://tokens.indieauth.com/token">
-  <!-- To use social readers via microsub, follow these steps.
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="authorization_endpoint" href="https://indieauth.com/auth">
+    <link rel="token_endpoint" href="https://tokens.indieauth.com/token">
+    <!-- To use social readers via microsub, follow these steps.
     (Details: https://indieweb.org/Microsub#Getting_Started)
     1. After publishing this to your domain, sign in to https://aperture.p3k.io/login with your domain
     2. You will see a <link> tag displayed on your dashboard that looks like:
@@ -14,56 +15,78 @@
     3. Copy that <link> tag and paste it after this HTML comment.
     4. Publish the updated page!
    -->
-  <title>My New Website</title>
-  <style>
-    @media (prefers-color-scheme: dark) {
-      html { background-color: #111111; color: #fbfbfb; }
-      a { color: #ca8465; }
-    }
-    body {
-      line-height: 1.6;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
-      text-align: center;
-      margin: 1rem auto;
-      min-height: 90vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-    img.u-photo { border-radius: 50%; }
-    ul { padding: 0; list-style: none; }
-  </style>
+    <title>My New Website</title>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            html {
+                background-color: #111111;
+                color: #fbfbfb;
+            }
+
+            a {
+                color: #ca8465;
+            }
+        }
+
+        body {
+            line-height: 1.6;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+            text-align: center;
+            margin: 1rem auto;
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        img.u-photo {
+            border-radius: 50%;
+        }
+
+        ul {
+            padding: 0;
+            list-style: none;
+        }
+    </style>
 </head>
 
 <body>
-  <!-- Reference for representative h-card properties: https://microformats.org/wiki/h-card -->
-  <main class="h-card" rel="author">
-    <img class="u-photo" alt="My profile photo" src="https://en.dailyminz.org/img/friends/stonepick.jpg" />
+    <!-- Reference for representative h-card properties: https://microformats.org/wiki/h-card -->
+    <main class="h-card" rel="author">
+        <img class="u-photo" alt="My profile photo" src="https://en.dailyminz.org/img/friends/stonepick.jpg" />
 
-    <h1>
-      I'm <span class="p-name">Kawashima Iwami</span>.
-    </h1>
+        <h1>
+            I'm <span class="p-name">Kawashima Iwami</span>.
+        </h1>
 
-    <p class="p-note">
-      Daily minds, daily mints.<br>
-      I write to discover the knowledge behind humanities and societies. Sometimes write comments on influential artworks, including anime.
-    </p>
+        <p class="p-note">
+            Daily minds, daily mints.<br>
+            I write to discover the knowledge behind humanities and societies. Sometimes write comments on influential
+            artworks, including anime.
+        </p>
 
-    <ul>
-      <!-- Replace __this_page__ with your domain -->
-      <li><a class="u-uid u-url" href="./goto.html">👉Explore my blog!</a></li>
+        <ul>
+            <!-- Replace __this_page__ with your domain -->
+            <li><a class="u-uid u-url" href="./goto.html">👉Explore my blog!</a></li>
 
-      <!-- Update or remove the below links! -->
-      
-      <!-- Replace _mygithubid_ with your GitHub username in both places on the next line: -->
-      <li>Github: <a class="u-url" href="https://github.com/StonePick" rel="me">@StonePick</a></li>
+            <!-- Update or remove the below links! -->
 
-      <!-- Replace _mytwitterid_ with your Twitter username in both places on the next line: -->
-      <li>X: <a class="u-url" href="https://x.com/pick_stone" rel="me">@pick_stone</a></li>
-      
-    </ul>
-  </main>
+            <!-- Replace _mygithubid_ with your GitHub username in both places on the next line: -->
+            <li>Github: <a class="u-url" href="https://github.com/StonePick" rel="me">@StonePick</a></li>
+
+            <!-- Replace _mytwitterid_ with your Twitter username in both places on the next line: -->
+            <li>X: <a class="u-url" href="https://x.com/pick_stone" rel="me">@pick_stone</a></li>
+
+        </ul>
+
+        <p>
+            <a href="https://xn--sr8hvo.ws/previous">←</a>
+            An <a href="https://xn--sr8hvo.ws">IndieWeb Webring</a> 🕸💍
+            <a href="https://xn--sr8hvo.ws/next">→</a>
+        </p>
+
+    </main>
 </body>
 
 </html>
