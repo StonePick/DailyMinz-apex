@@ -15,78 +15,157 @@
     3. Copy that <link> tag and paste it after this HTML comment.
     4. Publish the updated page!
    -->
-    <title>My New Website</title>
-    <style>
-        @media (prefers-color-scheme: dark) {
-            html {
-                background-color: #111111;
-                color: #fbfbfb;
-            }
+    <title>DailyMinz</title>
 
-            a {
-                color: #ca8465;
-            }
-        }
-
-        body {
-            line-height: 1.6;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
-            text-align: center;
-            margin: 1rem auto;
-            min-height: 90vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        img.u-photo {
-            border-radius: 50%;
-        }
-
-        ul {
-            padding: 0;
-            list-style: none;
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-    <!-- Reference for representative h-card properties: https://microformats.org/wiki/h-card -->
-    <main class="h-card" rel="author">
-        <img class="u-photo" alt="My profile photo" src="https://en.dailyminz.org/img/friends/stonepick.jpg" />
 
-        <h1>
-            I'm <span class="p-name">Kawashima Iwami</span>.
-        </h1>
+    <!-- NAVBAR -->
+    <header class="navbar">
 
-        <p class="p-note">
-            Daily minds, daily mints.<br>
-            I write to discover the knowledge behind humanities and societies. Sometimes write comments on influential
-            artworks, including anime.
-        </p>
+        <div class="nav-left">
+            <a href="https://theiwami.net">TheIwami</a>
+            <a href="#i18n">I18n</a>
+            <a href="https://github.com/StonePick">GitHub</a>
+        </div>
 
-        <ul>
-            <!-- Replace __this_page__ with your domain -->
-            <li><a class="u-uid u-url" href="./goto.html">👉Explore my blog!</a></li>
+        <div class="nav-right">
 
-            <!-- Update or remove the below links! -->
+            <label class="theme-switch">
+                <input type="checkbox" id="themeToggle">
+                <span>🌙</span>
+            </label>
 
-            <!-- Replace _mygithubid_ with your GitHub username in both places on the next line: -->
-            <li>Github: <a class="u-url" href="https://github.com/StonePick" rel="me">@StonePick</a></li>
+            <select id="langSelect">
+                <option value="en">EN</option>
+                <option value="zh">中文</option>
+            </select>
 
-            <!-- Replace _mytwitterid_ with your Twitter username in both places on the next line: -->
-            <li>X: <a class="u-url" href="https://x.com/pick_stone" rel="me">@pick_stone</a></li>
+        </div>
 
-        </ul>
+    </header>
 
+
+    <!-- HERO -->
+    <section class="hero">
+
+        <h1 id="heroTitle">DailyMinz</h1>
+        <p id="heroSubtitle">Record my way to the knowledge.</p>
+
+    </section>
+
+
+    <main>
+
+        <!-- WELCOME -->
+        <section id="welcome">
+            <h2 data-i18n="welcome_title">Welcome</h2>
+
+            <p data-i18n="welcome_text">
+                Welcome to my blog project.
+            </p>
+            <main hidden class="h-card" rel="author">
+
+                <img class="u-photo" alt="My profile photo" src="https://en.dailyminz.org/img/friends/stonepick.jpg" />
+
+                <h1>
+                    I'm <span class="p-name">Kawashima Iwami</span>.
+                </h1>
+
+                <p class="p-note">
+                    Daily minds, daily mints.<br>
+                    I write to discover the knowledge behind humanities and societies. Sometimes write comments on
+                    influential
+                    artworks, including anime.
+                </p>
+
+                <ul>
+                    <!-- Replace __this_page__ with your domain -->
+                    <li><a class="u-uid u-url" href="./goto.html">👉Explore my blog!</a></li>
+
+                    <!-- Update or remove the below links! -->
+
+                    <!-- Replace _mygithubid_ with your GitHub username in both places on the next line: -->
+                    <li>Github: <a class="u-url" href="https://github.com/StonePick" rel="me">@StonePick</a></li>
+
+                </ul>
+
+            </main>
+        </section>
+
+
+        <!-- LATEST POSTS -->
+        <section id="latest">
+
+            <h2 data-i18n="latest_title">Latest Posts</h2>
+
+            <ul id="postList"></ul>
+
+            <a id="readMore" href="#">Read more →</a>
+
+        </section>
+
+
+        <!-- I18N MATRIX -->
+        <section id="i18n">
+
+            <h2>I18n Matrix</h2>
+
+            <table id="i18nTable">
+                <thead>
+                    <tr>
+                        <th>Article</th>
+                        <th>Chinese</th>
+                        <th>English</th>
+                    </tr>
+                </thead>
+
+                <tbody></tbody>
+
+            </table>
+
+        </section>
+
+
+        <!-- OTHER PROJECTS -->
+        <section id="projects">
+
+            <h2 data-i18n="project_title">Other Projects</h2>
+
+            <div class="project-list">
+
+                <div class="project">
+                    <h3>Project A</h3>
+                    <p>Placeholder description.</p>
+                </div>
+
+                <div class="project">
+                    <h3>Project B</h3>
+                    <p>Placeholder description.</p>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <p>© 2026 TheIwami</p>
         <p>
             <a href="https://xn--sr8hvo.ws/previous">←</a>
             An <a href="https://xn--sr8hvo.ws">IndieWeb Webring</a> 🕸💍
             <a href="https://xn--sr8hvo.ws/next">→</a>
         </p>
 
-    </main>
+    </footer>
+
+    <script src="js/main.js"></script>
+
 </body>
 
 </html>
