@@ -11,9 +11,45 @@ let currentLang = "en";
 
 // THEME SWITCH
 
-document.getElementById("themeToggle").addEventListener("change", e => {
+const themeToggle = document.getElementById("themeToggle");
 
-    document.body.classList.toggle("dark");
+function setTheme(isDark) {
+
+    document.body.classList.toggle("dark", isDark);
+
+    themeToggle.textContent = isDark ? "🔆" : "🌙";
+
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+
+}
+
+function initTheme() {
+
+    const savedTheme = localStorage.getItem("theme");
+
+    let isDark;
+
+    if (savedTheme) {
+
+        isDark = savedTheme === "dark";
+
+    } else {
+
+        isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+    }
+
+    setTheme(isDark);
+
+}
+
+initTheme();
+
+themeToggle.addEventListener("click", () => {
+
+    const isDark = document.body.classList.contains("dark");
+
+    setTheme(!isDark);
 
 });
 
@@ -36,11 +72,9 @@ document.getElementById("langSelect").addEventListener("change", e => {
 
 async function fetchFeed(url) {
 
-    const res = await fetch("https://api.allorigins.win/get?url=" + encodeURIComponent(url));
+    const res = await fetch("https://cors-anywhere.herokuapp.com/" + url);
 
-    const data = await res.json();
-
-    const xml = new DOMParser().parseFromString(data.contents, "text/xml");
+    const xml = new DOMParser().parseFromString(await res.text(), "text/xml");
 
     const entries = [...xml.querySelectorAll("entry")];
 
@@ -95,11 +129,13 @@ async function loadMatrix() {
     const enSet = new Set(en.map(p => slug(p.link)));
 
     const all = new Set([...zhSet, ...enSet]);
+    const allArray = Array.from(all);
+    const displayCount = Math.min(allArray.length, 6);
 
     const tbody = document.querySelector("#i18nTable tbody");
     tbody.innerHTML = "";
 
-    all.forEach(name => {
+    allArray.slice(0, displayCount).forEach(name => {
 
         const tr = document.createElement("tr");
 
@@ -114,6 +150,16 @@ async function loadMatrix() {
         tbody.appendChild(tr);
 
     });
+
+    if (allArray.length > 6) {
+
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `<td colspan="3"><a href="i18n.html">Read more</a></td>`;
+
+        tbody.appendChild(tr);
+
+    }
 
 }
 

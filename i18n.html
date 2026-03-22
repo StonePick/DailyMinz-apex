@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="authorization_endpoint" href="https://indieauth.com/auth">
+    <link rel="token_endpoint" href="https://tokens.indieauth.com/token">
+    <title>I18n Matrix - DailyMinz</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+
+        <div class="nav-left">
+            <a href="https://theiwami.net">TheIwami</a>
+            <a href="/i18n.html">I18n</a>
+            <a href="https://github.com/StonePick">GitHub</a>
+        </div>
+
+        <div class="nav-right">
+
+            <button id="themeToggle" class="theme-switch">🌙</button>
+
+            <select id="langSelect">
+                <option value="en">EN</option>
+                <option value="zh">中文</option>
+            </select>
+
+        </div>
+
+    </header>
+
+
+    <!-- HERO -->
+    <section class="hero">
+
+        <h1 id="heroTitle">I18n Matrix</h1>
+        <p id="heroSubtitle">Complete list of articles and their translations.</p>
+
+    </section>
+
+
+    <main>
+
+        <!-- I18N MATRIX -->
+        <section id="i18n">
+
+            <h2>Complete I18n Matrix</h2>
+
+            <table id="i18nTable">
+                <thead>
+                    <tr>
+                        <th>Article</th>
+                        <th>Chinese</th>
+                        <th>English</th>
+                    </tr>
+                </thead>
+
+                <tbody></tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <p>© 2026 TheIwami</p>
+        <p>
+            <a href="https://xn--sr8hvo.ws/previous">←</a>
+            An <a href="https://xn--sr8hvo.ws">IndieWeb Webring</a> 🕸💍
+            <a href="https://xn--sr8hvo.ws/next">→</a>
+        </p>
+
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Override loadMatrix to show full table
+        async function loadMatrix() {
+            const zh = await fetchFeed(FEEDS.zh);
+            const en = await fetchFeed(FEEDS.en);
+
+            const zhSet = new Set(zh.map(p => slug(p.link)));
+            const enSet = new Set(en.map(p => slug(p.link)));
+
+            const all = new Set([...zhSet, ...enSet]);
+
+            const tbody = document.querySelector("#i18nTable tbody");
+            tbody.innerHTML = "";
+
+            all.forEach(name => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+<td>${name}</td>
+<td>${zhSet.has(name) ? "√" : "×"}</td>
+<td>${enSet.has(name) ? "√" : "×"}</td>
+`;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Load the matrix
+        loadMatrix();
+    </script>
+
+</body>
+
+</html>
