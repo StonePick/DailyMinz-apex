@@ -86,13 +86,11 @@
     <script>
         // Override loadMatrix to show full table
         async function loadMatrix() {
-            const zh = await fetchFeed(FEEDS.zh);
-            const en = await fetchFeed(FEEDS.en);
+            const { zh_names = [], en_names = [] } = await fetchNames();
 
-            const zhSet = new Set(zh.map(p => slug(p.link)));
-            const enSet = new Set(en.map(p => slug(p.link)));
-
-            const all = new Set([...zhSet, ...enSet]);
+            const zhSet = new Set(zh_names);
+            const enSet = new Set(en_names);
+            const all = Array.from(new Set([...zh_names, ...en_names]));
 
             const tbody = document.querySelector("#i18nTable tbody");
             tbody.innerHTML = "";

@@ -1,11 +1,4 @@
 
-const FEEDS = {
-
-    zh: "https://zh.dailyminz.org/atom.xml",
-    en: "https://en.dailyminz.org/atom.xml"
-
-};
-
 let currentLang = "en";
 
 
@@ -44,104 +37,61 @@ function initTheme(themeToggle) {
 }
 
 
-// RSS FETCH
+// JSON NAMES FETCH
 
-async function fetchFeed(url) {
-
-    const res = await fetch("https://cors-anywhere.herokuapp.com/" + url);
-
-    const xml = new DOMParser().parseFromString(await res.text(), "text/xml");
-
-    const entries = [...xml.querySelectorAll("entry")];
-
-    return entries.map(e => ({
-
-        title: e.querySelector("title").textContent,
-        link: e.querySelector("link").getAttribute("href")
-
-    }));
-
+async function fetchNames() {
+    const res = await fetch("names.json");
+    return await res.json();
 }
 
 
-// LATEST POSTS
+// FEATURES
 
-async function loadPosts() {
-
-    const posts = await fetchFeed(FEEDS[currentLang]);
-
-    const list = document.getElementById("postList");
+async function loadFeatures() {
+    const { zh_names = [], en_names = [] } = await fetchNames();
+    const names = currentLang === "zh" ? zh_names : en_names;
+    const list = document.getElementById("featureList");
 
     list.innerHTML = "";
 
-    posts.slice(0, 6).forEach(p => {
-
+    names.slice(0, 6).forEach(name => {
         const li = document.createElement("li");
-
-        li.innerHTML = `<a href="${p.link}">${p.title}</a>`;
-
+        li.textContent = name;
         list.appendChild(li);
-
     });
 
-    document.getElementById("readMore").href =
-        currentLang === "zh" ?
-            "https://zh.dailyminz.org" :
-            "https://en.dailyminz.org";
-
+    document.getElementById("featureMore").href = "i18n.html";
 }
 
 
 // I18N MATRIX
 
 async function loadMatrix() {
+    const { zh_names = [], en_names = [] } = await fetchNames();
 
-    const zh = await fetchFeed(FEEDS.zh);
-    const en = await fetchFeed(FEEDS.en);
-
-    const zhSet = new Set(zh.map(p => slug(p.link)));
-    const enSet = new Set(en.map(p => slug(p.link)));
-
-    const all = new Set([...zhSet, ...enSet]);
-    const allArray = Array.from(all);
-    const displayCount = Math.min(allArray.length, 6);
+    const zhSet = new Set(zh_names);
+    const enSet = new Set(en_names);
+    const all = Array.from(new Set([...zh_names, ...en_names]));
+    const displayCount = Math.min(all.length, 6);
 
     const tbody = document.querySelector("#i18nTable tbody");
     tbody.innerHTML = "";
 
-    allArray.slice(0, displayCount).forEach(name => {
-
+    all.slice(0, displayCount).forEach(name => {
         const tr = document.createElement("tr");
-
         tr.innerHTML = `
-
 <td>${name}</td>
 <td>${zhSet.has(name) ? "√" : "×"}</td>
 <td>${enSet.has(name) ? "√" : "×"}</td>
-
 `;
-
         tbody.appendChild(tr);
-
     });
 
-    if (allArray.length > 6) {
-
+    if (all.length > displayCount) {
         const tr = document.createElement("tr");
-
         tr.innerHTML = `<td colspan="3"><a href="i18n.html">Read more</a></td>`;
-
         tbody.appendChild(tr);
-
     }
-
-}
-
-
-function slug(url) {
-
-    return url.split("/").pop().replace(".html", "");
-
 }
 
 
@@ -163,118 +113,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (langSelect) {
         langSelect.addEventListener("change", e => {
             currentLang = e.target.value;
-            loadPosts();
+            loadFeatures();
             loadMatrix();
         });
     }
 
-    loadPosts();
+    loadFeatures();
     loadMatrix();
 });
-
-async function fetchFeed(url) {
-
-    const res = await fetch("https://cors-anywhere.herokuapp.com/" + url);
-
-    const xml = new DOMParser().parseFromString(await res.text(), "text/xml");
-
-    const entries = [...xml.querySelectorAll("entry")];
-
-    return entries.map(e => ({
-
-        title: e.querySelector("title").textContent,
-        link: e.querySelector("link").getAttribute("href")
-
-    }));
-
-}
-
-
-
-// LATEST POSTS
-
-async function loadPosts() {
-
-    const posts = await fetchFeed(FEEDS[currentLang]);
-
-    const list = document.getElementById("postList");
-
-    list.innerHTML = "";
-
-    posts.slice(0, 6).forEach(p => {
-
-        const li = document.createElement("li");
-
-        li.innerHTML = `<a href="${p.link}">${p.title}</a>`;
-
-        list.appendChild(li);
-
-    });
-
-    document.getElementById("readMore").href =
-        currentLang === "zh" ?
-            "https://zh.dailyminz.org" :
-            "https://en.dailyminz.org";
-
-}
-
-
-
-// I18N MATRIX
-
-async function loadMatrix() {
-
-    const zh = await fetchFeed(FEEDS.zh);
-    const en = await fetchFeed(FEEDS.en);
-
-    const zhSet = new Set(zh.map(p => slug(p.link)));
-    const enSet = new Set(en.map(p => slug(p.link)));
-
-    const all = new Set([...zhSet, ...enSet]);
-    const allArray = Array.from(all);
-    const displayCount = Math.min(allArray.length, 6);
-
-    const tbody = document.querySelector("#i18nTable tbody");
-    tbody.innerHTML = "";
-
-    allArray.slice(0, displayCount).forEach(name => {
-
-        const tr = document.createElement("tr");
-
-        tr.innerHTML = `
-
-<td>${name}</td>
-<td>${zhSet.has(name) ? "√" : "×"}</td>
-<td>${enSet.has(name) ? "√" : "×"}</td>
-
-`;
-
-        tbody.appendChild(tr);
-
-    });
-
-    if (allArray.length > 6) {
-
-        const tr = document.createElement("tr");
-
-        tr.innerHTML = `<td colspan="3"><a href="i18n.html">Read more</a></td>`;
-
-        tbody.appendChild(tr);
-
-    }
-
-}
-
-
-function slug(url) {
-
-    return url.split("/").pop().replace(".html", "");
-
-}
-
-
-
-// INIT
-
-loadPosts();
-loadMatrix();
